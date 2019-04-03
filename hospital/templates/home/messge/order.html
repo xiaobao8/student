@@ -1,0 +1,239 @@
+
+
+
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+    <link rel="apple-touch-icon-precomposed" href="/static/admin/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script src="/static/admin/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="/static/admin/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="/static/admin/css/amazeui.datatables.min.css"/>
+    <link rel="stylesheet" href="/static/admin/css/app.css">
+    <style>
+        .content__list .content__list--item {
+            height: 182px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .content__list .content__list--item--aside {
+            height: 100%;
+            width: 243px;
+            float: left;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .content__list .content__list--item--aside img {
+            width: 100%;
+            height: 100%;
+        }
+
+        img, input, select {
+            vertical-align: middle;
+        }
+
+        .content__list .content__list--item--main {
+            margin-left: 280px;
+        }
+
+        .twoline {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .content__list .content__list--item--des {
+            margin-top: 30px;
+            margin-bottom: 16px;
+        }
+
+        .content__list .content__list--item--title a {
+            font-size: 20px;
+            font-weight: 700;
+            color: #101d37;
+        }
+
+        .content__list .content__list--item--brand {
+            margin-bottom: 16px;
+            color: #9399a5;
+        }
+
+        .oneline {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .content__list .content__list--item--time {
+            font-size: 14px;
+            color: rgba(16, 29, 55, .3);
+        }
+
+        .content__list .content__list--item--bottom {
+            position: absolute;
+            bottom: 0;
+            left: 280px;
+            white-space: normal;
+            height: 30px;
+        }
+
+        .content__list .content__list--item--bottom i {
+            display: inline-block;
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            text-align: center;
+            color: #849aae;
+            background-color: rgba(132, 154, 174, .1);
+            border-radius: 2px;
+            margin-right: 6px;
+        }
+
+        .content__list .content__list--item-price {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -14px;
+            color: #fa5741;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .content__list .content__list--item-price em {
+            font-size: 28px;
+            font-family: Tahoma;
+        }
+    </style>
+
+
+    <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">预约管理</h1>
+
+            <ul class="hornav">
+                <li class="{% if request.GET.status == "1" or not request.GET.status %}current{% endif %}"><a href="?status=1">等待预约</a></li>
+                <li class="{% if request.GET.status == "2" %}current{% endif %}"><a href="?status=2">预约成功</a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+
+          {% if orderlist.0.status == 0 %}
+            <div class="am-u-sm-12">
+                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black  dataTable"
+                       id="example-r">
+                    <thead>
+                    <tr >
+                        <th style="font-size: 16px; color: #00BFFF">ID</th>
+                        <th style="font-size: 16px; color: #00BFFF">医生头像</th>
+                        <th style="font-size: 16px; color: #00BFFF">医生名</th>
+                        <th style="font-size: 16px; color: #00BFFF">患者名</th>
+                        <th style="font-size: 16px; color: #00BFFF">就诊时间</th>
+                        <th style="font-size: 16px; color: #00BFFF">创建时间</th>
+                    </tr>
+                    </thead>
+
+                      {% for i in orderlist %}
+                        <tr style="text-align:center">
+                            <td style="margin-left:50px;font-size: 14px">{{ forloop.counter }}</td>
+                            <td style="font-size: 14px">
+                                <a href="{% url "home_actorinfo" i.actor.pk %}">
+                                <img width="80" src="/media/{{ i.actor.avatar }}"
+                                     alt="asdsad"></td>
+                        </a>
+                            <td style="font-size: 14px">{{ i.actor.name }}</td>
+                            <td style="font-size: 14px">{{ i.patient.name }}</td>
+                            <td style="font-size: 14px">星期{{ i.actor.out_time }}</td>
+                            <td style="font-size: 14px">{{ i.addtime|date:"Y-m-d" }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    <!-- more data -->
+                </table>
+
+            </div>
+            {% endif %}
+              {% if orderlist.0.status == 1 %}
+              <div class="am-u-sm-12">
+                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black  dataTable"
+                       id="example-r">
+                    <thead>
+                    <tr>
+                      <th style="font-size: 16px; color: #00BFFF">ID</th>
+                        <th style="font-size: 16px; color: #00BFFF">医生头像</th>
+                        <th style="font-size: 16px; color: #00BFFF">医生名</th>
+                        <th style="font-size: 16px; color: #00BFFF">患者名</th>
+                        <th style="font-size: 16px; color: #00BFFF">出诊时间</th>
+                        <th style="font-size: 16px; color: #00BFFF">创建时间</th>
+                        <th style="font-size: 16px; color: #00BFFF">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for j in orderlist %}
+                        <tr class="gradeX" style="text-align:center">
+                            <td style="font-size: 14px">{{ forloop.counter }} </td>
+                            <td style="font-size: 14px">
+                                <a href="{% url "home_actorinfo" j.actor.pk %}">
+                                <img width="80" src="/media/{{ j.actor.avatar }}" style="font-size: 14px"      alt="ddd"></td>
+                            </a>
+                            <td style="font-size: 14px">{{ j.actor.name }}</td>
+                            <td style="font-size: 14px">{{ j.patient.name }}</td>
+                            <td style="font-size: 14px">星期{{ j.actor.out_time }}</td>
+                            <td style="font-size: 14px">{{ j.addtime|date:"Y-m-d" }}</td>
+                            {% if not j.comment.id %}
+                            <td style="font-size: 14px"><a href="{% url "home_comment" j.pk %}" style="color: red">点击评论</a></td>
+
+                            {% else %}
+                             <td style="font-size: 14px"><a href="javascript:void(0);;;" style="color: red">已评论</a></td>
+
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+
+                    <!-- more data -->
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        <script>
+            $(".pei").click(function () {
+                var pk = $(this).attr("pk")
+                var el = $(this)
+                $.ajax({
+                    url:"",
+                    data:{
+                        pk:pk
+                    },
+                    success:function (data) {
+                        alert("恭喜配对成功！")
+                        location.href = location.href
+                    }
+                })
+            })
+        </script>
+        <script>
+            $(".del").click(function () {
+                var hid = $(this).attr("pk")
+                var el = $(this)
+                $.ajax({
+                    url: "",
+                    type: "GET",
+                    data: {
+                        hid: hid
+                    },
+                    success: function (data) {
+                        alert("删除成功")
+                        el.parent().parent().parent().remove()
+                    }
+                })
+            })
+        </script>
+    </div>
+{% endblock %}

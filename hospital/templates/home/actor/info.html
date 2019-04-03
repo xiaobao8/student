@@ -1,0 +1,287 @@
+{% extends 'home/index.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/home/bootstrap.min.css">
+<!-- 项目初始化样式 -->
+<link rel="stylesheet" type="text/css" href="/static/home/sub_whir_css.css">
+{% endblock %}
+
+
+
+{% block con %}
+<script type="text/javascript">
+	/*
+	     说明：nav-2为demo编号
+	*/
+
+	//定义变量获取屏幕视口宽度
+	var windowWidth = $(window).width();
+
+	//导航选中
+
+	$("#nav" + navID).addClass("active");
+
+	//判断视口宽度，大于或等于1024（桌面浏览器）的时候才执行以下代码
+	if(windowWidth >= 1024){
+		//下拉菜单
+		$(".nav-2 .mainnav li").hover(function(){
+			$(this).find("dl").stop().show(400);
+		},function(){
+			$(this).find("dl").stop().hide(400);
+		})
+
+		//搜索按钮，点击显示输入框
+//		$(".search .click").click(function(){
+//			$(this).parent().addClass("search_bg");
+//			$(this).siblings(".searchbox").stop().slideToggle(500,function(){
+//				$(".searchbox input").focus();
+//			});
+//		})
+	}
+
+    //小屏的时候点击菜单按执行以下代码
+	$(".Top_menu").click(function(){
+		var _class=$(this).attr("class");
+
+		if(_class=="Top_menu"){
+			$(this).addClass("close");
+			$(".mainnav").css({"transform":"translateX(-15px)","-webkit-transform":"translateX(-15px)"});
+		}else{
+			$(this).removeClass("close");
+			$(".mainnav").attr("style","");
+		}
+	})
+
+var queryKey = '输入关键字搜索';
+if (queryKey != "")
+    $("#topKey").val(queryKey);
+
+function GoSearchUrl() {
+    var searchinput = document.getElementById("topKey");
+    if (searchinput.value == "" || searchinput.value == "输入关键字搜索") {
+        alert("输入关键词搜索！");
+        searchinput.focus();
+        return false;
+    }
+    if (searchinput.value.length > 50) {
+        alert("输入的关键词字数不要过多！");
+        searchinput.focus();
+        return false;
+    }
+    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）—|{}【】‘；：”“'。，、？]");
+    if (pattern.test(searchinput.value)) {
+        alert("您输入的内容存在特殊字符!");
+        searchinput.focus();
+        return false;
+    }
+    window.location = "/search/SubSearch.aspx?subjectid=55&key=" + escape(searchinput.value);
+    return true;
+}
+
+function entersearch() {
+    //alert(dd);
+    var event = window.event || arguments.callee.caller.arguments[0];
+    if (event.keyCode == 13) {
+        GoSearchUrl();
+    }
+}
+
+function checkComments() {
+    var event = window.event || arguments.callee.caller.arguments[0];
+    //alert(event.keyCode);
+    if ((event.keyCode > 32 && event.keyCode < 48) ||
+	  (event.keyCode > 57 && event.keyCode < 65) ||
+	  (event.keyCode > 90 && event.keyCode < 97)
+	  ) {
+        event.returnValue = false;
+    }
+}
+
+function stripscript(s) {
+
+    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）&mdash;—|{}【】‘；：”“'。，、？]");
+    var rs = "";
+    for (var i = 0; i < s.length; i++) {
+        rs = rs + s.substr(i, 1).replace(pattern, '');
+    }
+
+    return rs;
+}
+</script>
+<!-- demo 结束 -->
+
+
+<!--  banner begin -->
+<div class="subhomeban">
+	<!-- 图片列表 -->
+	<div class="banlist">
+
+  <div class="subList">
+        	<div class="container">
+			     <div class="column">专家介绍<span>Expert introduction</span></div>
+			 <div class="columnList">
+
+
+               <a id="menuid136" href="/zjjsTF/list_136.aspx?subjectid=55">专家介绍</a>
+                    </div>
+
+     <div class="Current">当前位置 &gt;<a href="/index_53.aspx?subjectid=55">首页</a> &gt; <span>专家介绍</span></div>
+
+        </div></div>
+    </div>
+
+    <!-- 图片列表 -->
+
+</div>
+<!-- banner end 	-->
+
+<div class="subMain">
+	<div class="container">
+
+       <div class="infoTi">{{ obj.name }}</div>
+      <div class="infoTime">{{ obj.addtime|date:"Y-m-d" }}</div>
+      <article class="txtbox">
+        <div class="t_content">
+          <table cellpadding="0" cellspacing="0" border="0" style="margin:10px auto;">
+            <tbody>
+              <tr>
+                  <td width="200" height="150" align="center">
+                    <img src="/media/{{ obj.avatar }}" height="150">
+                  </td>
+                  <td width="500">
+                    <table class="tb1" cellpadding="0" cellspacing="1" border="1" width="400" align="center" bgcolor="#CCCCCC" style="border-color: #ccc;">
+                      <tbody>
+                          <tr bgcolor="#FFFFFF">
+                            <td height="24"><b class="fz_14px">{{ obj.name }}</b></td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF">
+                            <td height="24">性别：
+                            {% if obj.sex == "0" %}
+                              女
+                                 {% else %}
+                                男
+                                {% endif %}
+                            </td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF">
+                            <td height="24">职务：{{ obj.post }}</td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF">
+                            <td height="24">职称：{{ obj.engineer }}</td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF">
+                            <td height="24">科室：<a href="JavaScript:void(0);;">{{ obj.office.name }}</a></td>
+                          </tr>
+                          <tr bgcolor="#ffffff">
+
+                            <td class="cba">
+                                {% if not order_obj %}
+                                <a target="_blank" class="order" pk="{{ obj.pk }}" href="javascript:void(0)">
+                                    <b style="color:#900;">我要预约</b>
+                                </a>
+                                {% else %}
+                                <a target="_blank" href="javascript:void(0)">
+                                    <b style="color:#900;">你已预约</b>
+                                </a>
+                                {% endif %}
+                            </td>
+
+                          </tr>
+                      </tbody>
+                    </table>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellpadding="0" cellspacing="0" border="0" width="700" style="margin:10px auto;">
+            <tbody>
+              <tr>
+                <td style="line-height:22px;">
+                    <span style="font-size: 16px">专家简介：</span>
+                    <p>{{ obj.info }}<br /> </p>
+                </td>
+              </tr>
+            <tr>
+                <td style="font-size: 16px">评论：</td>
+            </tr>
+              {% if comment %}
+            {% for i in comment %}
+            <tr style="margin-top: 20px">
+                <td style="border-bottom: 1px solid #ccc">
+                    <br>
+                    <span style=" font-size: 14px">患者名：<span style="color:red;">{{ i.order.patient.name }}</span></span>
+                    <span style="float: right;color:#00a8ff">{{ i.addtime|date:"Y-m-d" }}</span>
+                    <span style="margin-left: 19px;"><br>内容：{{ i.content }}</span>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+                  <td style="border-bottom: 1px solid #ccc">
+                    <br>
+
+                    <span style="margin-left: 19px;"><br>暂无</span>
+                </td>
+
+            {% endif %}
+            </tbody>
+          </table>
+
+          <div class="clean"></div>
+        </div>
+
+       </article>
+
+
+	</div>
+
+</div>
+<!--  content  begin  -->
+
+
+
+<!-- Bootstrap组件的基本js -->
+<script src="/static/home/bootstrap.min.js"></script>
+
+
+
+<script>
+
+$(".Current a:first").attr("href","/index_53.aspx?subjectid=55");
+
+//分享代码
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"32"},"share":{},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["sqq","weixin","tsina"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<script>
+//整站无图处理
+jQuery.each(jQuery("img"), function (i, n) { jQuery(n).error(function () { n.src = '/uploadfiles/nopic.jpg'; }); n.src = n.src; });
+
+
+// 生成预约记录
+$(".order").click(function () {
+    var pk = $(this).attr("pk")
+    var el = $(this)
+
+    $.ajax({
+        url:"{% url "home_ajax_order" %}",
+        data:{
+            pk:pk
+        },
+        dataType:"json",
+        success:function (data) {
+            alert("预约成功！")
+            el.html("你已预约")
+            el.remove()
+            $(".cba").append("<a href='javascript:void(0)'><b>你已预约</b></a>")
+        }
+    })
+})
+
+</script>
+
+
+
+
+
+<script>
+$("#menuid"+menuid).addClass("on");
+</script>
+{% endblock %}

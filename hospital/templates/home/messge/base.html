@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Forms | Amanda Admin Template</title>
+        <link rel="stylesheet" href="/static/home/messge/css/style.default.css" type="text/css" />
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery-1.7.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery.cookie.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/jquery.tagsinput.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/charCount.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/ui.spinner.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/plugins/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/custom/general.js"></script>
+        <script type="text/javascript" src="/static/home/messge/js/custom/forms.js"></script>
+        <script src="/static/home/html/assets/js/jquery-3.3.1.min.js"></script>
+    </head>
+
+    <body class="withvernav">
+        <div class="bodywrapper">
+            <div class="topheader">
+                <div class="left">
+                    <h1 class="logo" style="font-size: 32px;height: 50px;line-height: 50px">用户中心.
+                        <span>da</span></h1>
+                    <br clear="all" /></div>
+                <!--left-->
+                <div class="right">
+                    <div style="float: left;
+                    padding: 6px 6px 6px 6px;
+                    background: #32415a ;
+                    -moz-border-radius: 2px;
+                    -webkit-border-radius: 2px;
+                    border-radius: 2px;
+                    -moz-box-shadow: inset 1px 1px 2px #2b384e;
+                    float: left;
+                    border-bottom: 1px solid #445775;
+                    -webkit-box-shadow: inset 1px 1px 2px #2b384e;
+                    box-shadow: inset 1px 1px 2px #2b384e;
+                    cursor: pointer;
+                    margin-right: 100px;
+                    " class="">
+                        <a href="/" style="margin-right: 100px; display: block;color:white !important;,">主页</a></div>
+                    <div class="userinfo">
+                        <img src="images/thumbs/avatar.png" alt="" />
+                        <span>个人中心</span></div>
+                    <!--userinfo-->
+                    <div class="userinfodrop">
+                        <div class="avatar">
+                            <a href="">
+                                <img src="/static/home/messge/images/thumbs/avatarbig.png" alt="" /></a>
+                        </div>
+                        <!--avatar-->
+                        <div class="userdata">
+                            <h4>张三</h4>
+                            <span class="email">666666666@qq.com</span>
+                            <ul>
+
+                                <a href="{% url "home_out_login" %}">退出</a></li>
+                            </ul>
+                        </div>
+                        <!--userdata--></div>
+                    <!--userinfodrop--></div>
+                <!--right--></div>
+            <!--topheader-->
+            <div class="vernav2 iconmenu">
+                <ul>
+                    <li {% if "onemessage" in request.path %} class="current"{% endif %}>
+                        <a href="{% url 'home_one_message' %}"  style="font-size: 14px">个人信息管理</a></li>
+                    <li {% if "order" in request.path %} class="current"{% endif %}>
+                        <a href="{% url 'home_order' %}" class="elements" style="font-size: 14px">预约管理</a></li>
+                    </ul>
+                <br/>
+                <br/></div>
+            <!--leftmenu-->{% block main %}
+
+
+            {% endblock %}</div>
+        <!--bodywrapper--></body>
+
+</html>

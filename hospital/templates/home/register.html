@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" type="text/css" href="/static/home/register/css/regist.css">
+    <script type="text/javascript" src="/static/home/register/js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <article>
+            <h1><em>用户注册</em><span>预约挂号系统</span></h1>
+            <div class="main">
+                <form action="{% url 'home_register' %}" method="post">
+                  {% csrf_token %}
+                    <div class="tel">
+                        <input type="tel" required name="phone" placeholder="手机号"><br><br>
+                    </div>
+                    <div class="userName">
+                        <input type="text" required name="name" placeholder="用户名"><br><br>
+                    </div>
+                    <div class="password">
+                        <input type="password" required name="password" placeholder="密码"><br><br>
+                    </div>
+                    <div class="againpwd">
+                        <input type="password" required name="repassword" placeholder="再次输入密码"><br><br>
+                    </div>
+                    <button>注册</button>
+                </form>
+            </div>
+        </article>
+        <footer>
+            <ul>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">关于我们</a></li>
+
+                <li><a href="#">友情链接</a></li>
+                <li><a href="#">医院地址</a></li>
+                <li><a href="#">关注我们</a></li>
+            </ul>
+        </footer>
+    </div>
+</body>
+</html>

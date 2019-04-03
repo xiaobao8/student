@@ -1,0 +1,73 @@
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+    <script type="text/javascript" src="/static/home/messge/js/plugins/jquery-1.7.min.js"></script>
+ <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">信息完善</h1>
+
+            <ul class="hornav">
+                <li class="current"><a href="#basicform">个人资料</a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+        <div id="contentwrapper" class="contentwrapper">
+
+        	<div id="basicform" class="subcontent">
+
+                    <div class="contenttitle2">
+                        <h3>对医生的反馈</h3>
+
+                    </div><!--contenttitle-->
+
+                    <form class="stdform" method="post" >
+ {% csrf_token %}
+                        <p>
+                        	<label>医生</label>
+                            <span class="field"><input disabled type="text" value="{{ obj.name }}" name="name" class="smallinput" /></span>
+
+                        </p>
+
+
+                      
+                         <p>
+                        	<label>头像</label>
+                            <span class="field"><img width="120" src="/media/{{ obj.avatar }}" alt=""></span>
+                        </p>
+                        <p>
+                            <span class="field">
+                           <textarea name="content" style="font-size: 15px; height: 50px;"></textarea>
+                            </span>
+                        </p>
+                        <br clear="all" />
+
+	                        <p class="stdformbutton">
+	                        	<button class="submit radius2">点击提交评论</button>
+	                        </p>
+
+
+                    </form>
+                <script>
+                    $(document).ready(function () {
+                        $(".submit").click(function () {
+                            var cotent = $("[name='content']").val()
+                            if (!cotent){
+                                alert("评论不能为空！")
+                                  return false
+                            }
+
+
+                        })
+                    })
+
+                </script>
+
+            </div><!--subcontent-->
+
+        </div><!--contentwrapper-->
+
+	</div><!-- centercontent -->
+{% endblock %}

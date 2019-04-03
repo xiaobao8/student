@@ -1,0 +1,82 @@
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+ <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">信息完善</h1>
+
+            <ul class="hornav">
+                <li class="current"><a href="#basicform">个人资料</a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+        <div id="contentwrapper" class="contentwrapper">
+
+        	<div id="basicform" class="subcontent">
+
+                    <div class="contenttitle2">
+                        <h3>基本信息填写</h3>
+
+                    </div><!--contenttitle-->
+
+                    <form class="stdform" action="{% url 'home_one_message' %}" method="post" enctype="multipart/form-data">
+ {% csrf_token %}
+                        <p>
+                        	<label>姓名</label>
+                            <span class="field"><input required type="text" value="{{ patient.name }}" name="name" class="smallinput" /></span>
+                            <small class="desc">请填写真实的用户名</small>
+                        </p>
+
+                        <p>
+                        	<label>性别</label>
+                            <span class="field">
+                            <select name="sex"  required class="uniformselect">
+                                {% if patient.sex == "1" %}
+                            	<option value="1" selected>男</option>
+                                <option value="0">女</option>
+                                {% else %}
+                                    <option value="1" >男</option>
+                                <option value="0" selected>女</option>
+                                {% endif %}
+                            </select>
+                            </span>
+                        </p>
+                        <p>
+                         <label>手机</label>
+                           <span class="field"><input required type="text" value="{{ patient.phone }}" name="phone" class="smallinput" /></span>
+                       </p>
+                       <p>
+                        <label>密码</label>
+                          <span class="field"><input required type="password" value="{{ patient.password }}" name="password" class="smallinput" /></span>
+                      </p>
+
+                         <p>
+                        	<label>年龄</label>
+                            <span class="field"><input required type="text" value="{% if patient.age %}{{ patient.age }}{% endif %}" name="age" class="smallinput" /></span>
+                        </p>
+
+                        <br clear="all" />
+
+	                        <p class="stdformbutton">
+	                        	<button class="submit radius2">修改</button>
+                                <a href="/" class="reset radius2" style="border: 1px solid #f0882c;
+                                            background: #fb9337;
+                                            color: #fff;
+                                            cursor: pointer;
+                                            padding: 7px 10px;
+                                            font-weight: bold;margin-left: 20px">返回首页</a>
+	                        </p>
+
+
+                    </form>
+
+
+            </div><!--subcontent-->
+
+        </div><!--contentwrapper-->
+
+	</div><!-- centercontent -->
+{% endblock %}

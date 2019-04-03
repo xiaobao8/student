@@ -1,0 +1,100 @@
+
+
+
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+    <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">结对评价</h1>
+            <span class="pagedesc">温馨提示：真实评价</span>
+
+            <ul class="hornav">
+                <li class="current"><a href="#basicform">评价内容</a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+        <div id="contentwrapper" class="contentwrapper">
+
+
+            <div class="contentwrapper">
+
+                <div class="two_third newsfeed">
+
+                    <div id="status" class="subcontent">
+
+                        {#                    <div class="statusbox">#}
+                        {#                        <form id="poststatus" action="ajax/newsfeed/status.php" method="post">#}
+                        {#                            <div class="status_thumb"><img src="../../images/thumbs/avatarbig.png" alt="" width="57" /></div>#}
+                        {#                            <div class="status_content">#}
+                        {#                                <textarea name="" cols="" rows="" id="statustext"></textarea>#}
+                        {#                            </div>#}
+                        {#                            <div class="submit"><button class="stdbtn btn_yellow">评论</button></div>#}
+                        {#                        </form>#}
+                        {#                    </div><!--statusbox-->#}
+
+
+                        <br clear="all"/><br/>
+
+                    </div><!-- #updates -->
+
+                    <div id="photo" class="subcontent" style="display: none;">
+
+                        <div class="statusbox">
+                            <form id="postphoto" action="ajax/newsfeed/status.php" method="post">
+                                <div class="status_thumb"><img src="/static/home/messge/images/thumbs/avatarbig.png"
+                                                               alt="" width="57"/></div>
+                                <div class="status_content">
+                                    <textarea name="" cols="" rows="" id="statusphoto"></textarea>
+                                </div>
+
+                                <div class="submit">
+                                    <div class="photoupload"><input type="file" name="photoupload"/></div>
+                                    <button class="stdbtn btn_yellow">评论</button>
+                                </div>
+                            </form>
+                        </div><!--statusbox-->
+                    </div><!-- #photo -->
+
+                    <br/>
+
+                    <ul class="updatelist">
+
+                        {% for foo in commentall %}
+                            {% if foo.content %}
+                                <li>
+                                    <div class="updatethumb">
+                                        <img width="50" src="/media/{{ foo.tenant.avatar }}" alt=""/>
+                                    </div>
+                                    <div class="updatecontent">
+                                        <div class="top">
+                                            <a href="" class="user">{{ foo.tenant.name }}</a> -{#  <a href="">3 评论</a> -#}
+                                            {#                                <a href="">分享</a> - <a href="">16赞</a> -#}
+                                            <span>{{ foo.addtime|date:"Y-d-m" }}</span>
+                                        </div><!--top-->
+                                        <img src="/media/{{ foo.house.avatar }}" alt="" width="300">
+                                        <div class="text">
+                                            <span style="color: #0c7cb5;">内容</span>：{{ foo.content }}
+                                        </div><!--text-->
+                                    </div><!--updatecontent-->
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+
+                    </ul>
+
+
+                </div><!--two_third newsfeed-->
+
+                <br clear="all"/>
+
+            </div><!--contentwrapper-->
+
+        </div><!--subcontent-->
+
+    </div><!--contentwrapper-->
+{% endblock %}

@@ -1,0 +1,91 @@
+
+    
+    
+
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+ <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">配对管理</h1>
+            <span class="pagedesc">温馨提示：祝你匹配成功</span>
+
+            <ul class="hornav">
+                <li class="current"><a href="#basicform">
+                    {% if request.session.User.shenfen == 0 %}
+                    配对信息
+                    {% else %}
+                    配对搜索
+                    {% endif %}
+                </a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+        <div id="contentwrapper" class="contentwrapper">
+
+        	<div id="basicform" class="subcontent">
+
+                    <div class="contenttitle2">
+                        <h3>我的合适配对</h3>
+                    </div><!--contenttitle-->
+
+                    <form class="stdform" action="" method="post">
+                {% csrf_token %}
+                        <p>
+                        	<label>配对用户</label>
+                            <span class="field"><input disabled value="{{ obj.name }}" type="text" name="name"></span>
+                        </p>
+                        <input type="hidden" name="name" value="{{ obj.name }}">
+
+
+                        <p>
+                        	<label>家乡要求</label>
+                            <span class="field"><input type="text" value="{{ pei_obj.hometown }}" name="hometown" id="firstname" class="longinput" /></span>
+                        </p>
+
+                        <p>
+                        	<label>年龄要求</label>
+                             <span class="field"><input type="text" value="{{ pei_obj.age }}" name="age" class="smallinput" /></span>
+                        </p>
+                    {% if request.session.User.shenfen == 0 %}
+                         <p>
+                        	<label>青年工作要求</label>
+                            <span class="field"><input value="{{ pei_obj.work }}" type="text" name="work" id="firstname" class="longinput" /></span>
+                        </p>
+                        {% endif %}
+
+
+                        <p>
+                        	<label>曾经的工作</label>
+                            <span class="field"><input value="{{ pei_obj.service }}" type="text" name="service" id="firstname" class="longinput" /></span>
+                        </p>
+
+                        <p>
+                        	<label>备注</label>
+                             <span class="field">
+                                <textarea cols="80" rows="5" name="remark" id="textarea1" class="longinput">{{ pei_obj.remark }}</textarea>
+                            </span>
+                        </p>
+
+                        <p>
+                        	<label>联系电话</label>
+                          <span  class="field"><input type="text" disabled value="{{ request.session.User.phone }}" name="phone" class="mediuminput" /></span>
+                         </p>
+
+                        <p class="stdformbutton" style="text-align: center;">
+                        	<input type="submit" class="submit radius2" value="确认提交">
+                        </p>
+
+
+                    </form>
+
+
+            </div><!--subcontent-->
+
+        </div><!--contentwrapper-->
+
+	</div><!-- centercontent -->
+{% endblock %}

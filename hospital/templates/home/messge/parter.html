@@ -1,0 +1,103 @@
+
+{% extends "home/messge/base.html" %}
+
+
+{% block main %}
+ <div class="centercontent">
+
+        <div class="pageheader">
+            <h1 class="pagetitle">结对管理</h1>
+            <span class="pagedesc">温馨提示：详细的留言有益哦</span>
+
+            <ul class="hornav">
+                <li class="current"><a href="#basicform">结对信息</a></li>
+                <!--<li><a href="#validation">Validation</a></li>-->
+            </ul>
+        </div><!--pageheader-->
+
+        <div id="contentwrapper" class="contentwrapper">
+
+        	<div id="basicform" class="subcontent">
+
+                    <div class="contenttitle2">
+                        <h3>我的结对信息</h3>
+                    </div><!--contenttitle-->
+                {% if obj %}
+
+                 <form class="stdform" action="" method="post">
+            {% csrf_token %}
+                        <p>
+                        	<label>结对房东名</label>
+                            <span class="field"><input disabled value="{{ obj.house.landlord.name }}" type="text" name="input2" class="mediuminput" /></span>
+                        </p>
+
+
+                        <p>
+                        	<label>结对地点</label>
+                            <span class="field"><input type="text" disabled value="{{ obj.house.shen.name }}-{{ obj.house.shi.name }}-{{ obj.house.qu.name }}-{{ obj.house.name }}"  name="firstname" id="firstname" class="longinput" /></span>
+                        </p>
+                        <p>
+                            <label>房源图片</label>
+                            <span class="field">
+                            <img src="/media/{{ obj.house.avatar }}" alt="" width="300">
+                            </span>
+                        </p>
+                        <p>
+                        	<label>结对时间</label>
+                             <span class="field"><input disabled value="{{ obj.addtime|date:"Y-m-d" }}" type="date" name="input1" class="smallinput" /></span>
+                        </p>
+
+                        <p>
+                        	<label>结对反馈</label>
+                             <span class="field">
+                                <textarea cols="80" rows="5" id="textarea1" name="content" class="longinput">{{ obj.content }}</textarea>
+                            </span>
+                        </p>
+
+                        <p class="stdformbutton" style="text-align: center;">
+                        	<input type="submit" class="submit radius2" value="我要反馈">
+                        </p>
+
+
+                    </form>
+
+                {% else %}
+                    <form class="stdform" action="" method="post">
+
+                        <p>
+                        	<label>结对用户名</label>
+                            <span class="field"><input type="text" name="input2" class="mediuminput" /></span>
+                        </p>
+
+
+                        <p>
+                        	<label>结对地点</label>
+                            <span class="field"><input type="text" name="firstname" id="firstname" class="longinput" /></span>
+                        </p>
+
+                        <p>
+                        	<label>结对时间</label>
+                             <span class="field"><input type="text" name="input1" class="smallinput" /></span>
+                        </p>
+
+                        <p>
+                        	<label>结对反馈</label>
+                             <span class="field">
+                                <textarea cols="80" rows="5" id="textarea1" class="longinput"></textarea>
+                            </span>
+                        </p>
+
+                        <p class="stdformbutton" style="text-align: center;">
+                        	<button  disabled class="submit radius2">等待结对</button>
+                        </p>
+
+
+                    </form>
+                {% endif %}
+
+            </div><!--subcontent-->
+
+        </div><!--contentwrapper-->
+
+	</div><!-- centercontent -->
+{% endblock %}
