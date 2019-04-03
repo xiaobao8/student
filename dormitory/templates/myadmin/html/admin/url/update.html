@@ -1,0 +1,43 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+
+
+								<form action="" method="post" class="am-form" data-am-validator>
+                                    {% csrf_token %}
+								  <fieldset>
+								    <legend>规则添加</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">规则说明：</label>
+								      <input type="text" id="doc-vld-name-2" name="name" value="{{ obj.name }}" minlength="1" placeholder="请说明规则" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-email-2">规则URL：</label>
+								      <input type="text" name="url" id="doc-vld-email-2" value="{{ obj.url }}" placeholder="URL" required/>
+								    </div>
+								    <input class="am-btn am-btn-secondary" type="submit"  value="提交">
+								  </fieldset>
+								</form>
+
+
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}

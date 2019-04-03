@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>后台模板</title>
+		<link rel="stylesheet" href="/static/myadmin/assets/css/amazeui.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/core.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/menu.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/index.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/admin.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/page/typography.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/page/form.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/component.css" />
+        <script type="text/javascript" src="/static/myadmin/assets/js/jquery-2.1.0.js" ></script>
+	</head>
+	<body>
+		<!-- Begin page -->
+		<header class="am-topbar am-topbar-fixed-top">		
+			<div class="am-topbar-left am-hide-sm-only">
+                <a href="index.html" class="logo"><span>{{ request.session.VipAdmin.name }}</span><i class="zmdi zmdi-layers"></i></a>
+            </div>
+	
+			<div class="contain">
+				<ul class="am-nav am-navbar-nav am-navbar-left">
+
+					<li><h4 class="page-title">
+                        {% block name %}
+
+                        {% endblock %}
+                    </h4></li>
+				</ul>
+				
+				<ul class="am-nav am-navbar-nav am-navbar-right">
+					<li class="inform"><i class="am-icon-bell-o" aria-hidden="true"></i></li>
+					<li class="hidden-xs am-hide-sm-only">
+                        <a href="{% url "myadmin_login_out" %}" class="loginout" style="color:red">退出</a>
+                    </li>
+				</ul>
+			</div>
+		</header>
+		<!-- end page -->
+        <script>
+
+        </script>
+		
+		<div class="admin">
+			<!--<div class="am-g">-->
+		<!-- ========== Left Sidebar Start ========== -->
+		<!--<div class="left side-menu am-hide-sm-only am-u-md-1 am-padding-0">
+			<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 548px;">
+				<div class="sidebar-inner slimscrollleft" style="overflow: hidden; width: auto; height: 548px;">-->
+                  <!-- sidebar start -->
+				  <div class="admin-sidebar am-offcanvas  am-padding-0" id="admin-offcanvas">
+				    <div class="am-offcanvas-bar admin-offcanvas-bar">
+				    	<!-- User -->
+						<div class="user-box am-hide-sm-only">
+	                        <div class="user-img">
+	                            <img src="/static/myadmin/assets/img/avatar-1.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive">
+	                            <div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
+	                        </div>
+	                        <h5><a href="#">Mat Helme</a> </h5>
+	                        <ul class="list-inline">
+	                            <li>
+	                                <a href="#">
+	                                    <i class="fa fa-cog" aria-hidden="true"></i>
+	                                </a>
+	                            </li>
+
+	                            <li>
+	                                <a href="#" class="text-custom">
+	                                    <i class="fa fa-cog" aria-hidden="true"></i>
+	                                </a>
+	                            </li>
+	                        </ul>
+	                    </div>
+	                    <!-- End User -->
+
+						 <ul class="am-list admin-sidebar-list">
+						    <li class="admin-parent">
+                            {% if "/myadmin/user/list/" in request.session.permission or "/myadmin/role/list/" in request.session.permission or "/myadmin/url/list/" in request.session.permission %}
+                             						      <a class="am-cf am-collapsed"  data-am-collapse="{target: '#collapse-nav1'}"><span class="am-icon-table"></span> 权限管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+
+
+                             {% endif %}
+                              <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav1">
+                                {% if "/myadmin/user/list/" in request.session.permission %}
+                                    <li><a href="{% url "myadmin_list" %}" class="am-cf"> 用户列表</a></li>
+                                  {% endif %}
+
+                               {% if "/myadmin/role/list/" in request.session.permission %}
+                                    <li><a href="{% url "myadmin_rule" %}">角色列表</a></li>
+                                  {% endif %}
+
+                                  {% if "/myadmin/url/list/" in request.session.permission %}
+                                     <li><a href="{% url "myadmin_url" %}">权限列表</a></li>
+                                  {% endif %}
+
+
+						      </ul>
+
+						    </li>
+						    <li class="admin-parent">
+
+						     {% if "/myadmin/student/" in request.session.permission %}
+
+                                  <a class="am-cf" data-am-collapse="{target: '#collapse-nav2'}"><i class="am-icon-line-chart" aria-hidden="true"></i> 学生管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+
+						      <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav2">
+                                      <li><a href="{% url "myadmin_stu" %}" class="am-cf"> 学生列表</a></li>
+						      </ul>
+
+
+                                {% endif %}
+						    </li>
+                            {% if "/myadmin/dormitory/" in request.session.permission %}
+                              <li class="admin-parent">
+
+						      <a class="am-cf" data-am-collapse="{target: '#collapse-nav6'}"><span class="am-icon-file"></span> 宿舍管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+						      <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav6">
+						        <li><a href="{% url "myadmin_dormitory" %}" class="am-cf"> 宿舍列表</a></li>
+						      </ul>
+						    </li>
+                            {% endif %}
+                            {% if "/myadmin/floor/" in request.session.permission %}
+                             <li class="admin-parent">
+						      <a class="am-cf" data-am-collapse="{target: '#collapse-nav7'}"><span class="am-icon-file"></span> 楼层管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+						      <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav7">
+						        <li><a href="{% url "myadmin_floor" %}" class="am-cf"> 楼层列表</a></li>
+						      </ul>
+						    </li>
+                            {% endif %}
+                         {% if "/myadmin/visit/" in request.session.permission %}
+                             <li class="admin-parent">
+						      <a class="am-cf" data-am-collapse="{target: '#collapse-nav8'}"><span class="am-icon-file"></span> 来访管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+						      <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav8">
+						        <li><a href="{% url "myadmin_visit" %}" class="am-cf"> 来访列表</a></li>
+						      </ul>
+						    </li>
+
+                        {% endif %}
+
+
+                         <li class="admin-parent">
+						      <a class="am-cf" data-am-collapse="{target: '#collapse-nav9'}"><span class="am-icon-file"></span> 学生申请管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+						      <ul class="am-list admin-sidebar-sub am-collapse" id="collapse-nav9">
+						        <li><a href="{% url "myadmin_student_shen" %}" class="am-cf"> 申请列表</a></li>
+						      </ul>
+						    </li>
+
+
+
+						  </ul>
+				</div>
+				  </div>
+				  <!-- sidebar end -->
+
+		
+            <!-- 主内容 -->
+            {% block main %}
+            
+            {% endblock %}
+            
+		</div>
+		
+		
+		<!-- navbar -->
+		<a href="admin-offcanvas" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"><!--<i class="fa fa-bars" aria-hidden="true"></i>--></a>
+		<script type="text/javascript" src="/static/myadmin/assets/js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="/static/myadmin/assets/js/amazeui.min.js"></script>
+		<script type="text/javascript" src="/static/myadmin/assets/js/app.js" ></script>
+		<script type="text/javascript" src="/static/myadmin/assets/js/blockUI.js" ></script>
+		<script type="text/javascript" src="/static/myadmin/assets/js/charts/echarts.min.js" ></script>
+		<script type="text/javascript" src="/static/myadmin/assets/js/charts/indexChart.js" ></script>
+
+	</body>
+	
+</html>

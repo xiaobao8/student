@@ -1,0 +1,129 @@
+{% extends "myadmin/base.html" %}
+
+{% block name %}
+角色列表
+{% endblock %}
+
+{% block main %}
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="card-box">
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                {% if "/myadmin/role/add/" in request.session.permission %}
+                                      <a href="{% url "myadmin_rule_add" %}" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                    新增
+                                </a>
+                                {% endif %}
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-input-group am-input-group-sm">
+                            <input value="{{ request.GET.sou }}" type="text" name="sou" class="am-form-field">
+                            <span class="am-input-group-btn">
+				            <button class="am-btn am-btn-default sou" type="button">搜索</button>
+				          </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row end -->
+                 <script>
+                    $(".sou").click(function () {
+                        if($("[name='sou']").val()){
+                            location.href="/myadmin/role/list/?sou="+$("[name='sou']").val()
+                        }else{
+                            location.href="/myadmin/role/list/"
+                        }
+                    })
+                </script>
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th class="table-id">ID</th>
+                                    <th class="table-title">角色名</th>
+                                    <th class="table-type">角色权限</th>
+                                    <th class="table-set">操作</th>
+                                </tr>
+                                </thead>
+
+
+                                {% for role in roles %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ role.name }}</td>
+                                    <td style="width: 50%" class="am-hide-sm-only">{{ role.permission.all|join:"，" }}</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                               {% if "/myadmin/role/update/" in request.session.permission %}
+                                                    <a href="{% url "myadmin_rule_update" role.pk %}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                        class="am-icon-pencil-square-o"></span> 编辑
+                                                </a>
+                                                {% endif %}
+                                             {% if "/myadmin/role/del/" in request.session.permission %}
+                                                <a href="javascript:void(0)" pk="{{ role.pk }}" class="del am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                    <span class="am-icon-trash-o"></span> 删除
+                                                </a>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+
+                                <script>
+                                    $(".del").click(function () {
+                                        var rid = $(this).attr("pk")
+                                        var el = $(this)
+                                        $.ajax({
+                                            url:"{% url "myadmin_rule_del" %}",
+                                            data:{
+                                                rid: rid
+                                            },
+                                            success:function (data) {
+                                                alert("删除成功")
+                                                el.parents("tr").remove()
+                                            }
+                                        })
+                                    })
+                                </script>
+
+
+                            </table>
+                            <div class="am-cf">
+                                <span style="margin-left: 10px">共 {{ roles.paginator.count }} 条记录</span>
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                          {% load functions %}
+                                        {% pageShow roles.paginator.num_pages request %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr/>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link rel="stylesheet" href="/static/myadmin/assets/css/core.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/menu.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/amazeui.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/component.css" />
+		<link rel="stylesheet" href="/static/myadmin/assets/css/page/form.css" />
+	</head>
+	<body>
+		<div class="account-pages">
+			<div class="wrapper-page">
+				<div class="text-center">
+	                <a href="index.html" class="logo"><span>学生宿舍管理系统</span></a>
+	            </div>
+
+	            <div class="m-t-40 card-box">
+	            	<div class="text-center">
+	                    <h4 class="text-uppercase font-bold m-b-0">Sign In</h4>
+	                </div>
+	                <div class="panel-body">
+	                	<form action="{% url 'myadmin_login' %}" class="am-form" method="POST">
+											{% csrf_token %}
+	                		<div class="am-g">
+	                			<div class="am-form-group">
+							      <input type="text" name="name" class="am-radius"  placeholder="Student ID">
+							    </div>
+
+							    <div class="am-form-group form-horizontal m-t-20">
+							      <input type="password" name="password" class="am-radius"  placeholder="Password">
+							    </div>
+									<div class="am-form-group form-horizontal m-t-20" style="position:relative">
+                        <input type="text" name="code" class="am-radius" id="user-name" placeholder="验证码">
+                        <img  src="{% url 'myadmin_verifycode' %}" onclick="this.src='{% url 'myadmin_verifycode' %}?'+Math.random()+''" style="position: absolute;top:0px;right: 5px;height: 36px;margin-right: -4px">
+                  </div>
+									<div class="am-form-group">
+                      <label for="user-name" class="am-u-sm-3 am-form-label" style="margin-top: 7px;margin-bottom: 20px">身份</label>
+                      <div class="am-u-sm-9" style="margin-top: 7px;margin-bottom: 20px">
+                          <label class="am-radio-inline" style="font-weight: normal;color: #999;">
+                              <input type="radio" name="role" checked value="0"> 管理员
+                          </label>
+                          <label class="am-radio-inline" style="font-weight: normal;color: #999;">
+                              <input type="radio" name="role" value="1" > 学生
+                          </label>
+                      </div>
+                  </div>
+
+		                        <div class="am-form-group ">
+		                        	<button type="" class="am-btn am-btn-primary am-radius" style="width: 100%;height: 100%;">Log In</button>
+		                        </div>
+	                		</div>
+
+	                	</form>
+
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</body>
+</html>

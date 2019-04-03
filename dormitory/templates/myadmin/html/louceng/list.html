@@ -1,0 +1,135 @@
+{% extends "myadmin/base.html" %}
+{% block name %}
+楼层列表
+{% endblock %}
+
+
+{% block main %}
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="card-box">
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                {% if "/myadmin/floor/add/" in request.session.permission %}
+                                <a href="{% url "myadmin_floor_add" %}" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                    新增
+                                </a>
+{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-input-group am-input-group-sm">
+                            <input value="{{ request.GET.sou }}" type="text" name="sou" class="am-form-field">
+                            <span class="am-input-group-btn">
+				            <button class="am-btn am-btn-default sou" type="button">搜索</button>
+				          </span>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(".sou").click(function () {
+                        if($("[name='sou']").val()){
+                            location.href="/myadmin/floor/?sou="+$("[name='sou']").val()
+                        }else{
+                            location.href="/myadmin/floor/"
+                        }
+                    })
+                </script>
+                <!-- Row end -->
+
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th class="table-id">楼号</th>
+                                    <th class="table-title">管理员工</th>
+                                    <th class="table-type">创建时间</th>
+                                    <th class="table-set">操作</th>
+                                </tr>
+                                </thead>
+
+
+                            {% for datum in data %}
+
+
+
+                                <tr>
+
+                                    <td class="" style="width: 100px">{{ datum.number }}号楼</td>
+                                    <td class="">{{ datum.user.name }}</td>
+                                    <td>{{ datum.addtime|date:"Y-m-d" }}</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                 {% if "/myadmin/floor/update/" in request.session.permission %}
+                                                <a href="{% url "myamdin_floor_update" datum.pk %}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                        class="am-icon-pencil-square-o"></span> 编辑
+                                                </a>
+                            {% endif %}
+                                            {% if "/myadmin/floor/del/" in request.session.permission %}
+                                                <a href="javascript:void(0);;;" pk="{{ datum.pk }}" class="del am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                    <span class="am-icon-trash-o"></span> 删除
+                                                </a>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                          {% endfor %}
+
+                                <script>
+                                    $(".del").click(function () {
+                                      var  pk = $(this).attr("pk")
+                                      var el = $(this)
+                                      $.ajax({
+                                          url:"{% url "myadmin_floor_del" %}",
+                                          data:{
+                                              pk:pk
+                                          },
+                                          success:function (data) {
+                                              if (data.error){
+                                                 alert("该楼栋还有宿舍不能删除！")
+                                              }else {
+                                                  alert("删除成功")
+                                                  el.parents("tr").remove()
+                                              }
+                                          }
+                                      })
+                                    })
+                                </script>
+
+                            </table>
+                            <div class="am-cf">
+                                <span style="margin-left: 10px">共 {{ data.paginator.count }} 条记录</span>
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                        {% load functions %}
+                                        {% pageShow data.paginator.num_pages request %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr/>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+{% endblock %}

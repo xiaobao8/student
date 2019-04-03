@@ -1,0 +1,133 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="am-g">
+                <!-- Row start -->
+                <div class="am-u-sm-12">
+                    <div class="card-box">
+
+
+                        <form action="" class="am-form" enctype="multipart/form-data" data-am-validator method="post">
+                            {% csrf_token %}
+                            <fieldset>
+                                <legend>学生添加</legend>
+                                <div class="am-form-group">
+                                    <label for="doc-vld-name-2">用户名：</label>
+                                    <input type="text" name="name" id="doc-vld-name-2" placeholder="输入用户名" required/>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="doc-vld-email-2">学号：</label>
+                                    <input type="text" name="no" id="doc-vld-email-2" placeholder="学号" required/>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="doc-vld-url-2">密码：</label>
+                                    <input type="password" name="password" id="doc-vld-url-2" placeholder="输入密码"
+                                           required/>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label for="doc-vld-age-2">手机：</label>
+                                    <input type="text" name="phone" minlength="11" maxlength="11" class="" id="doc-vld-age-2" placeholder="输入手机号"
+                                           required/>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label>性别： </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" value="1" checked name="sex" required> 男
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" value="0" name="sex"> 女
+                                    </label>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="doc-vld-age-2">专业：</label>
+                                    <input type="text" name="speciality" class="" value="" id="doc-vld-age-2" required/>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="doc-vld-age-2">学院：</label>
+                                    <input type="text" name="college" class="" value="" id="doc-vld-age-2" required/>
+                                </div>
+                                <div class="am-form-group dormitory">
+                                    <label for="doc-select-1">宿舍号</label>
+                                    <select id="doc-select-1" name="" required>
+                                        <option>-=请选择楼栋=-</option>
+                                        {% for i in storied %}
+                                            <option value="{{ i.id }}">{{ i.number }}栋</option>
+                                        {% endfor %}
+                                    </select>
+                                    <select id="doc-select-2" name="dormitory" required>
+                                        <option value="">-=请选择宿舍号=-</option>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                                <div class="am-form-group">
+                                    <label for="user-weibo" class="am-u-sm-3 am-form-label">
+                                        头像
+                                    </label>
+                                    <div class="am-u-sm-12">
+                                        <img src="/media/stu_img/default.png" alt="" id='imgfile'
+                                             width="100"></div>
+                                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                        <i class="am-icon-cloud-upload"></i>添加头像图片
+                                    </button>
+                                    <input name="avatar" id="doc-form-file" type="file"
+                                           change="getFileToPicture($event)" multiple="">
+                                </div>
+                                <script type="text/javascript">
+                                    $("input[type='file']").change(function () {
+                                        var file = this.files[0];
+                                        if (window.FileReader) {
+                                            var reader = new FileReader();
+                                            reader.readAsDataURL(file);
+                                            //监听文件读取结束后事件    
+                                            reader.onloadend = function (e) {
+                                                $("#imgfile").attr("src", e.target.result);    //e.target.result就是最后的路径地址
+                                            };
+                                        }
+                                    });
+                                </script>
+                                <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                            </fieldset>
+                        </form>
+
+
+                    </div>
+                </div>
+                <!-- Row end -->
+            </div>
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#doc-select-1').click(function () {
+            var storiedid = $(this).val()
+            if (Number(storiedid)) {
+                if (storiedid != "") {
+                    $.get('{% url "myadmin_storied" %}', {'storiedid': storiedid}, function (data) {
+                        $("#doc-select-2").find("option").remove()
+                        if (data.length == 0) {
+                            $("#doc-select-2").html('<option value="">-=无=-</option>')
+                            return;
+                        }
+                        var sel = $('.dormitory select[name=dormitory]')
+                        var opt = ''
+                        for (var i = 0; i < data.length; i++) {
+                            opt += '<option value="' + data[i]['id'] + '">' + data[i].number + "室" + '</option>'
+                        }
+                        sel.html(opt)
+                    }, 'json')
+                }
+            }
+
+        })
+    </script>
+{% endblock %}

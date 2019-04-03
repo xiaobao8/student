@@ -1,0 +1,99 @@
+{% extends "myadmin/base.html" %}
+
+{% block name %}
+学生申请列表
+{% endblock %}
+
+{% block main %}
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="card-box">
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+
+                            </div>
+                        </div>
+                    </div>
+{##}
+{#                    <div class="am-u-sm-12 am-u-md-3">#}
+{#                        <div class="am-input-group am-input-group-sm">#}
+{#                            <input value="{{ request.GET.sou }}" type="text" name="sou" class="am-form-field">#}
+{#                            <span class="am-input-group-btn">#}
+{#				            <button class="am-btn am-btn-default sou" type="button">搜索</button>#}
+{#				          </span>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+             <script>
+                    $(".sou").click(function () {
+                        if($("[name='sou']").val()){
+                            location.href="/myadmin/student/?sou="+$("[name='sou']").val()
+                        }else{
+                            location.href="/myadmin/student/"
+                        }
+                    })
+                </script>
+                <!-- Row end -->
+
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th class="table-id">ID</th>
+                                    <th class="table-type">学号</th>
+                                    <th class="table-type">姓名</th>
+                                    <th class="table-type">宿舍号</th>
+                                    <th class="table-set">操作</th>
+                                </tr>
+                                </thead>
+
+
+                                {% for i in data %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ i.no }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.dormitory.storied.number }}栋{{ i.dormitory.number }}室</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                 <a href="/myadmin/student/del/?sid={{ i.pk }}&type=shen" class="am-btn am-btn-default am-btn-xs am-text-secondary"> <span style="color:red">同意退寝</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </table>
+                            <div class="am-cf">
+{#                                <span style="margin-left: 10px">共 {{ data.paginator.count }} 条记录</span>#}
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+{#                                       {% load functions %}#}
+{#                                        {% pageShow data.paginator.num_pages request %}#}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr/>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+{% endblock %}

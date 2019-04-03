@@ -1,0 +1,60 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+
+
+								<form action="" method="post" class="am-form" data-am-validator>
+                                {% csrf_token %}
+								  <fieldset>
+								    <legend>宿舍添加</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">宿舍号：</label>
+								      <input value="{{ obj.number }}" type="text" id="doc-vld-name-2" name="number" minlength="3" placeholder="输入宿舍号" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label  for="doc-vld-email-2">容纳人数：</label>
+								      <input value="{{ obj.num }}" type="number" id="doc-vld-email-2" name="num" placeholder="输入容纳人数" required/>
+								    </div>
+
+                                      <div class="am-form-group">
+								      <label for="doc-select-1">请选择归属楼栋</label>
+								      <select id="doc-select-1" required name="lou">
+                                       <option value="">-=请选择一项=-</option>
+                                          {% for floor in floors %}
+                                            {% if obj.storied.pk == floor.pk %}
+                                            <option selected value="{{ floor.pk }}">{{ floor.number }}</option>
+                                              {% else %}
+                                                <option  value="{{ floor.pk }}">{{ floor.number }}</option>
+                                              {% endif %}
+                                          {% endfor %}
+
+								      </select>
+								      <span class="am-form-caret"></span>
+								    </div>
+
+								    <input class="am-btn am-btn-secondary" type="submit" value="提交">
+								  </fieldset>
+								</form>
+
+
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}

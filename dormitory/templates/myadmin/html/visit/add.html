@@ -1,0 +1,52 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+
+								<form action="{% url 'myadmin_visit_add' %}" method="post" class="am-form" data-am-validator>
+                  {% csrf_token %}
+								  <fieldset>
+								    <legend>来访者登记</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">姓名：</label>
+								      <input type="text" id="doc-vld-name-2" name="name"  placeholder="输入姓名" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-email-2">学号：</label>
+								      <input type="text" id="doc-vld-email-2" name="no" placeholder="输入学号" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-url-2">身份证号：</label>
+								      <input type="text" id="doc-vld-url-2" name="card" placeholder="输入身份证号" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-age-2">访问宿舍：</label>
+								      <input type="text" class=""  id="doc-vld-age-2" name="dormitory" placeholder="输入宿舍号"  required />
+								    </div>
+								    <button class="am-btn am-btn-secondary" type="submit">提交</button>
+								  </fieldset>
+								</form>
+
+
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}

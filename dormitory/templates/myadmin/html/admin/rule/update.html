@@ -1,0 +1,62 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+
+
+								<form action="" method="post" class="am-form" data-am-validator>
+                                {% csrf_token %}
+								  <fieldset>
+								    <legend>角色修改</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">角色名：</label>
+								      <input type="text" id="doc-vld-name-2" name="name" value="{{ obj.name }}" minlength="1" placeholder="输入角色名" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-select-2">请选择权限</label>
+								      <select multiple class="" id="doc-select-2" name="permission" style="height: 200px">
+                                          {% for permission in permissions %}
+                                              {% if permission.name in obj.permission.all|join:"," %}
+                                                 <option selected value="{{ permission.pk }}">{{ permission.name }}</option>
+                                              {% else %}
+                                                   <option  value="{{ permission.pk }}">{{ permission.name }}</option>
+                                              {% endif %}
+                                          {% endfor %}
+
+								      </select>
+								    </div>
+
+
+								    <input class="am-btn am-btn-secondary" type="submit" value="提交">
+								  </fieldset>
+								</form>
+
+                                <script>
+                                    $("[type='submit']").click(function () {
+                                        var permission = $("[name='permission']").val()
+                                        if (!permission){
+                                            alert("请选择权限")
+                                            return false
+                                        }
+                                    })
+                                </script>
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}

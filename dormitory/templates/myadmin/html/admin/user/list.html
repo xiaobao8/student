@@ -1,0 +1,141 @@
+{% extends "myadmin/base.html" %}
+
+{% block name %}
+用户列表
+{% endblock %}
+
+{% block main %}
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="card-box">
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                {% if "/myadmin/user/add/" in request.session.permission %}
+                                <a href="{% url "myadmin_add" %}" type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span>
+                                    新增
+                                </a>
+{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-input-group am-input-group-sm">
+                            <input value="{{ request.GET.sou }}" name="sou" type="text" class="am-form-field">
+                            <span class="am-input-group-btn">
+				            <button class="am-btn am-btn-default sou" type="button">搜索</button>
+				          </span>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(".sou").click(function () {
+                        if($("[name='sou']").val()){
+                            location.href="/myadmin/user/list/?sou="+$("[name='sou']").val()
+                        }else{
+                            location.href="/myadmin/user/list/"
+                        }
+                    })
+                </script>
+                <!-- Row end -->
+
+                <!-- Row start -->
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th class="table-id">ID</th>
+                                    <th class="table-title">用户名</th>
+                                    <th class="table-type">角色</th>
+                                    <th class="table-type">管理楼层</th>
+                                    <th class="table-author am-hide-sm-only">创建时间</th>
+                                    <th class="table-set">操作</th>
+                                </tr>
+                                </thead>
+
+                                <tr>
+                                    {% for foo in userlist %}
+
+
+
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ foo.name }}</td>
+                                    <td>{{ foo.role.all|join:"，" }}</td>
+                                    <td class="am-hide-sm-only">
+                                    {% if "超级管理员" in foo.role.all|join:"，" %}
+                                        所有楼
+                                    {% else %}
+                                        {% if foo.storied.number %}
+                                        {{ foo.storied.number }}号楼
+                                            {% else %}
+                                             暂无
+                                            {% endif %}
+                                    {% endif %}
+                                    </td>
+                                    <td class="am-hide-sm-only">{{ foo.addtime|date:"Y-m-d" }}</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                 {% if "/myadmin/user/update/" in request.session.permission %}
+                                                <a href="{% url "myadmin_update" foo.pk %}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span
+                                                        class="am-icon-pencil-square-o"></span> 编辑
+                                                </a>
+                                                    {% endif %}
+                                             {% if "/myadmin/user/del/" in request.session.permission %}
+                                                <a href="javascript:void(0)" pk="{{ foo.pk }}" class="dels am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                    <span class="am-icon-trash-o"></span> 删除
+                                                </a>
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+
+                            </table>
+                            <div class="am-cf">
+                                <span style="margin-left: 10px">共 {{ userlist.paginator.count }} 条记录</span>
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                        {% load functions %}
+                                        {% pageShow userlist.paginator.num_pages request %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr/>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Row end -->
+
+            </div>
+
+
+        </div>
+
+        <script>
+            $(".dels").click(function () {
+                var uid = $(this).attr("pk")
+                $.ajax({
+                    url:"{% url "myadmin_del" %}",
+                    data:{
+                        uid:uid
+                    },
+                    success:function (data) {
+                        alert("删除成功!")
+                        location.href="/myadmin/user/list/"
+                    }
+                })
+            })
+        </script>
+    </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+{#								<ul class="am-nav am-fr">#}
+{#								  <li class="am-dropdown" data-am-dropdown>#}
+{#								    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">#}
+{#								       <span class="am-icon-caret-down"></span>#}
+{#								    </a>#}
+{#								    <ul class="am-dropdown-content">#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								    </ul>#}
+{#								  </li>#}
+{#								</ul>#}
+
+								<form action="" class="am-form" method="post" data-am-validator>
+                                {% csrf_token %}
+								  <fieldset>
+								    <legend>楼层添加</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">楼层号：</label>
+								      <input type="number" id="doc-vld-name-2" name="number" placeholder="输入楼层号" required/>
+								    </div>
+
+
+								    <div class="am-form-group">
+								      <label for="doc-select-1">员工</label>
+								      <select id="doc-select-1" required name="user">
+                                       <option value="">-=请选择一项=-</option>
+                                        {% for foo in data %}
+                                            <option value="{{ foo.pk }}">{{ foo.name }}</option>
+                                        {% endfor %}
+                                        
+
+
+								      </select>
+								      <span class="am-form-caret"></span>
+								    </div>
+
+
+
+								    <input class="am-btn am-btn-secondary" type="submit" value="提交">
+								  </fieldset>
+								</form>
+
+
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}

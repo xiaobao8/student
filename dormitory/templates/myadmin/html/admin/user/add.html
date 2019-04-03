@@ -1,0 +1,84 @@
+{% extends "myadmin/base.html" %}
+
+
+
+{% block main %}
+    <div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="am-g">
+					<!-- Row start -->
+						<div class="am-u-sm-12">
+							<div class="card-box">
+{#								<ul class="am-nav am-fr">#}
+{#								  <li class="am-dropdown" data-am-dropdown>#}
+{#								    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">#}
+{#								       <span class="am-icon-caret-down"></span>#}
+{#								    </a>#}
+{#								    <ul class="am-dropdown-content">#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								      <li>1231234</li>#}
+{#								    </ul>#}
+{#								  </li>#}
+{#								</ul>#}
+
+								<form action="" class="am-form" method="post" data-am-validator>
+								  <fieldset>
+                                      {% csrf_token %}
+								    <legend>用户添加</legend>
+								    <div class="am-form-group">
+								      <label for="doc-vld-name-2">用户名：</label>
+								      <input name="name" type="text" id="doc-vld-name-2" minlength="1" placeholder="输入用户名" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-email-2">密码：</label>
+								      <input type="password" name="password"  id="doc-vld-email-2" placeholder="输入密码" required/>
+								    </div>
+
+								    <div class="am-form-group">
+								      <label for="doc-vld-url-2">手机号码：</label>
+								      <input type="text" name="phone" id="doc-vld-url-2" placeholder="请输入手机号码" required/>
+								    </div>
+
+
+
+								    <div class="am-form-group">
+								      <label for="doc-select-2">角色</label>
+								      <select multiple class="" id="doc-select-2" name="role">
+                                          {% for foo in rolelist %}
+                                             <option value="{{ foo.pk }}">{{ foo.name }}</option>
+                                          {% endfor %}
+
+
+								      </select>
+								    </div>
+
+								    <input class="am-btn am-btn-secondary sub" type="submit" value="提交">
+								  </fieldset>
+								</form>
+                                        <script>
+
+                                          $("[type='submit']").click(function () {
+                                              var da = $("#doc-select-2").val()
+                                              if (!da){
+                                                  alert("请选择角色！")
+                                                  return false
+                                              }
+
+                                          })
+                                      </script>
+
+							</div>
+						</div>
+					<!-- Row end -->
+				</div>
+
+
+
+
+			</div>
+		</div>
+{% endblock %}
